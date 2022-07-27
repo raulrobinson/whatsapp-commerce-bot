@@ -114,3 +114,4 @@ package-lock.json
 *.zip
 
 .roughwork.txt
+ngrok.exe

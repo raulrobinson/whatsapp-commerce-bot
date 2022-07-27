@@ -1,4 +1,5 @@
 'use strict';
+
 const request = require('request');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
@@ -51,18 +52,18 @@ module.exports = class EcommerceStore {
     generateRandomGeoLocation() {
         let storeLocations = [
             {
-                latitude: 44.985613,
-                longitude: 20.1568773,
-                address: 'New Castle',
+                latitude: 10.98992,
+                longitude: -74.78865,
+                address: 'Portal del Prado',
             },
             {
-                latitude: 36.929749,
-                longitude: 98.480195,
-                address: 'Glacier Hill',
+                latitude: 11.00852,
+                longitude: -74.82184,
+                address: 'C. Cial. Viva',
             },
             {
-                latitude: 28.91667,
-                longitude: 30.85,
+                latitude: 11.01356,
+                longitude: -74.82747,
                 address: 'Buena Vista',
             },
         ];

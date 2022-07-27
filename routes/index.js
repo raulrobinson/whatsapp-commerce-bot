@@ -1,4 +1,5 @@
 'use strict';
+
 const router = require('express').Router();
 
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
@@ -81,15 +82,15 @@ router.post('/meta_wa_callbackurl', async (req, res) => {
 
             if (typeOfMsg === 'text_message') {
                 await Whatsapp.sendSimpleButtons({
-                    message: `Hey ${recipientName}, \nYou are speaking to a chatbot.\nWhat do you want to do next?`,
+                    message: `Hola ${recipientName}, \nEstas en la tienda chat-online.\nque estas necesitando?`,
                     recipientPhone: recipientPhone,
                     listOfButtons: [
                         {
-                            title: 'View some products',
+                            title: 'Ver los productos',
                             id: 'see_categories',
                         },
                         {
-                            title: 'Speak to a human',
+                            title: 'Con un vendedor',
                             id: 'speak_to_human',
                         },
                     ],
@@ -134,20 +135,20 @@ router.post('/meta_wa_callbackurl', async (req, res) => {
                     });
 
                     await Whatsapp.sendSimpleButtons({
-                        message: `Here is the product, what do you want to do next?`,
+                        message: `Aqui esta el producto, que mas deseas hacer?`,
                         recipientPhone: recipientPhone,
                         message_id,
                         listOfButtons: [
                             {
-                                title: 'Add to cart🛒',
+                                title: 'Add al Carrito 🛒',
                                 id: `add_to_cart_${product_id}`,
                             },
                             {
-                                title: 'Speak to a human',
+                                title: 'Con un vendedor',
                                 id: 'speak_to_human',
                             },
                             {
-                                title: 'See more products',
+                                title: 'Ver mas productos',
                                 id: 'see_categories',
                             },
                         ],
@@ -162,7 +163,7 @@ router.post('/meta_wa_callbackurl', async (req, res) => {
                     // respond with a list of human resources
                     await Whatsapp.sendText({
                         recipientPhone: recipientPhone,
-                        message: `Not to brag, but unlike humans, chatbots are super fast⚡, we never sleep, never rest, never take lunch🍽 and can multitask.\n\nAnway don't fret, a hoooooman will 📞contact you soon.\n\nWanna blast☎ his/her phone😈?\nHere are the contact details:`,
+                        message: `No es por presumir, pero a diferencia de los humanos, los chatbots son súper rápidos ⚡, Nosotras nunca dormimos, nunca descansamos, nunca almorzamos 🍽 y somos multitareas.\n\nDe todos modos no te preocupes, una hooooombre lo hará 📞en contacto con usted pronto.\n\nquiero explotar ☎ su teléfono 😈?\nAquí están los datos de contacto:`,
                     });
 
                     await Whatsapp.sendContact({
@@ -170,33 +171,34 @@ router.post('/meta_wa_callbackurl', async (req, res) => {
                         contact_profile: {
                             addresses: [
                                 {
-                                    city: 'Nairobi',
-                                    country: 'Kenya',
+                                    city: 'Barranquilla',
+                                    country: 'Colombia',
                                 },
                             ],
                             name: {
-                                first_name: 'Daggie',
-                                last_name: 'Blanqx',
+                                first_name: 'rasysbox',
+                                last_name: 'RSY',
                             },
                             org: {
-                                company: 'Mom-N-Pop Shop',
+                                company: 'Tienda RASYSBOX',
                             },
                             phones: [
                                 {
-                                    phone: '+1 (555) 025-3483',
+                                    phone: '+57 (605) 3251-3483',
                                 },
                                 {
-                                    phone: '+254 712345678',
+                                    phone: '+57 712345678',
                                 },
                             ],
                         },
                     });
                 }
+
                 if (button_id === 'see_categories') {
                     let categories = await Store.getAllCategories();
 
                     await Whatsapp.sendSimpleButtons({
-                        message: `We have several categories.\nChoose one of them.`,
+                        message: `Nosotros tenemos varias categorias.\nEscoge una de ellas.`,
                         recipientPhone: recipientPhone,
                         message_id,
                         listOfButtons: categories.data
@@ -245,9 +247,9 @@ router.post('/meta_wa_callbackurl', async (req, res) => {
 
                     await Whatsapp.sendRadioButtons({
                         recipientPhone: recipientPhone,
-                        headerText: `#BlackFriday Offers: ${selectedCategory}`,
-                        bodyText: `Our Santa 🎅🏿 has lined up some great products for you based on your previous shopping history.\n\nPlease select one of the products below:`,
-                        footerText: 'Powered by: BMI LLC',
+                        headerText: `#BlackFriday Ofertas: ${selectedCategory}`,
+                        bodyText: `Nuestro Santa 🎅🏿 ha alineado algunos productos excelentes para usted en función de su historial de compras anterior.\n\nPor favor selecciona uno de los productos abajo:`,
+                        footerText: 'Desarrollado por: RASYSBOX LLC',
                         listOfSections,
                     });
                 }
@@ -260,16 +262,16 @@ router.post('/meta_wa_callbackurl', async (req, res) => {
                     }).count;
 
                     await Whatsapp.sendSimpleButtons({
-                        message: `Your cart has been updated.\nNumber of items in cart: ${numberOfItemsInCart}.\n\nWhat do you want to do next?`,
+                        message: `Su carrito se ha actualizado.\nNumero de productos en el carrito: ${numberOfItemsInCart}.\n\nQué quieres hacer después?`,
                         recipientPhone: recipientPhone,
                         message_id,
                         listOfButtons: [
                             {
-                                title: 'Checkout 🛍️',
+                                title: 'Pagar 🛍️',
                                 id: `checkout`,
                             },
                             {
-                                title: 'See more products',
+                                title: 'Ver mas productos',
                                 id: 'see_categories',
                             },
                         ],
@@ -278,7 +280,7 @@ router.post('/meta_wa_callbackurl', async (req, res) => {
 
                 if (button_id === 'checkout') {
                     let finalBill = listOfItemsInCart({ recipientPhone });
-                    let invoiceText = `List of items in your cart:\n`;
+                    let invoiceText = `Lista de productos en tu carrito:\n`;
 
                     finalBill.products.forEach((item, index) => {
                         let serial = index + 1;
@@ -289,7 +291,7 @@ router.post('/meta_wa_callbackurl', async (req, res) => {
 
                     Store.generatePDFInvoice({
                         order_details: invoiceText,
-                        file_path: `./invoice_${recipientName}.pdf`,
+                        file_path: `./factura_${recipientName}.pdf`,
                     });
 
                     await Whatsapp.sendText({
@@ -299,15 +301,15 @@ router.post('/meta_wa_callbackurl', async (req, res) => {
 
                     await Whatsapp.sendSimpleButtons({
                         recipientPhone: recipientPhone,
-                        message: `Thank you for shopping with us, ${recipientName}.\n\nYour order has been received & will be processed shortly.`,
+                        message: `Gracias por comprar con nosotros, ${recipientName}.\n\nSu orden ha sido recibida & sera procesada prontamente.`,
                         message_id,
                         listOfButtons: [
                             {
-                                title: 'See more products',
+                                title: 'Ver mas productos',
                                 id: 'see_categories',
                             },
                             {
-                                title: 'Print my invoice',
+                                title: 'Mi Factura',
                                 id: 'print_invoice',
                             },
                         ],
@@ -320,8 +322,8 @@ router.post('/meta_wa_callbackurl', async (req, res) => {
                     // Send the PDF invoice
                     await Whatsapp.sendDocument({
                         recipientPhone,
-                        caption: `Mom-N-Pop Shop invoice #${recipientName}`,
-                        file_path: `./invoice_${recipientName}.pdf`,
+                        caption: `Tienda RASYSBOX factura #${recipientName}`,
+                        file_path: `./factura_${recipientName}.pdf`,
                     });
 
                     // Send the location of our pickup station to the customer, so they can come and pick their order
@@ -329,7 +331,7 @@ router.post('/meta_wa_callbackurl', async (req, res) => {
 
                     await Whatsapp.sendText({
                         recipientPhone: recipientPhone,
-                        message: `Your order has been fulfilled. Come and pick it up, as you pay, here:`,
+                        message: `Su pedido ha sido cumplido. Ven a recogerlo, como pagas, aquí:`,
                     });
 
                     await Whatsapp.sendLocation({
@@ -337,7 +339,7 @@ router.post('/meta_wa_callbackurl', async (req, res) => {
                         latitude: warehouse.latitude,
                         longitude: warehouse.longitude,
                         address: warehouse.address,
-                        name: 'Mom-N-Pop Shop',
+                        name: 'Tienda RASYSBOX',
                     });
                 }
             }
@@ -353,5 +355,4 @@ router.post('/meta_wa_callbackurl', async (req, res) => {
         return res.sendStatus(500);
     }
 });
-
 module.exports = router;

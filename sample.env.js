@@ -6,11 +6,11 @@ const production = {
 const development = {
     ...process.env,
     NODE_ENV: process.env.NODE_ENV || 'development',
-    // PORT: '',
-    // Meta_WA_VerifyToken: '',
-    // Meta_WA_accessToken: '',
-    // Meta_WA_SenderPhoneNumberId: '',
-    // Meta_WA_wabaId: '',
+    PORT: '9000',
+    Meta_WA_accessToken:'EAAFyB4P...............',
+    Meta_WA_SenderPhoneNumberId: '10305....',
+    Meta_WA_wabaId: '11005.....',
+    Meta_WA_VerifyToken: 'YouCanSetYourOwnToken',
 };
 
 const fallback = {
